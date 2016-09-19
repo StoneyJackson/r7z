@@ -61,7 +61,7 @@ def r7z(file_):
             todo.extend(list(file_.iterdir()))
         elif file_.is_file() and file_.suffix in SUPPORTED_EXTENSIONS:
             directory = file_.parent.joinpath(file_.stem)
-            subprocess.run(['7z', 'e', '-o' + str(directory), str(file_)])
+            subprocess.run(['7z', 'x', '-o' + str(directory), str(file_)])
             todo.append(pathlib.Path(directory))
 
 
