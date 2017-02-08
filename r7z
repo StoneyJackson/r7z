@@ -49,7 +49,24 @@ def print_usage():
     print('usage:', sys.argv[0], 'FILE_OR_DIRECTORY')
 
 
-SUPPORTED_EXTENSIONS = '.7z .xz .zip .gz .gzip .tgz .bz2 .bzip2 .tbz2 .tbz .tar .rar .z .taz'.split()
+# List taken from https://sevenzip.osdn.jp/chm/general/formats.htm
+# Then removed extensions that are not typically unzipped (e.g., docx).
+SUPPORTED_EXTENSIONS = {
+    "7z": "7z",
+    "BZIP2": "bz2 bzip2 tbz2 tbz",
+    "GZIP": "gz gzip tgz",
+    "TAR": "tar",
+    "XZ": "xz txz",
+    "ZIP": "zip zipx",
+    "LZH": "lzh lha",
+    "LZMA": "lzma",
+    "RAR": "rar r00",
+    "XAR": "xar pkg",
+    "Z": "z taz"
+}
+SUPPORTED_EXTENSIONS = {k: v.split() for k, v in SUPPORTED_EXTENSIONS.items()}
+SUPPORTED_EXTENSIONS = {k: ['.' + e for e in v] for k, v in SUPPORTED_EXTENSIONS.items()}
+SUPPORTED_EXTENSIONS = [e for k, v in SUPPORTED_EXTENSIONS.items() for e in v]
 
 
 def r7z(file_):
